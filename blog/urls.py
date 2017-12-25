@@ -2,6 +2,8 @@ from django.conf.urls import url
 from blog import views
 
 urlpatterns = [
+    url(r'^track_user/$', views.track_user, name='track_user'),
+    url(r'^stop-tracking/$', views.stop_tracking, name='stop_tracking'),
     url(r'^feedback/$', views.feedback, name='feedback'),
     url(r'^blog/$', views.test_redirect, name='test_redirect'),
     url(r'^category/(?P<category_slug>[\w-]+)/$', views.post_by_category, name='post_by_category'),

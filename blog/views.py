@@ -69,3 +69,20 @@ def feedback(request):
     else:
         f = FeedbackForm()
     return render(request, 'blog/feedback.html', {'form': f})
+
+def track_user(request):
+    response = render(request, 'blog/track_user.html')
+    if not request.COOKIES.get('visits'):
+        response.set_cookie('visits', '1', 3600 * 24 * 365 * 2)
+    else:
+        visits = int(request.COOKIES.get('visits')) + 1
+        response.set_cookie('visits', visits, 3600 * 24 * 365 * 2)
+    return response
+
+def stop_tracking(request):
+    if request.COOKIES.get('visits'):
+        response = HttpResponse('Cookies cleared')
+        response.delete_cookie('visits')
+    else:
+        response = HttpResponse('We are not tracking you.')
+    return response
