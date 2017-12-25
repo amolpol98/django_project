@@ -1,7 +1,7 @@
 from django import forms
 from django.template.defaultfilters import slugify
 from django.core.exceptions import ValidationError
-from .models import Author, Tag, Category, Post
+from .models import Author, Tag, Category, Post, Feedback
 
 class AuthorForm(forms.Form):
 
@@ -69,3 +69,9 @@ class PostForm(forms.ModelForm):
         instance.save()
 
         return instance
+
+class FeedbackForm(forms.ModelForm):
+
+    class Meta:
+        model = Feedback
+        fields = '__all__'
