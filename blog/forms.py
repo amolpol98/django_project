@@ -63,10 +63,9 @@ class PostForm(forms.ModelForm):
             raise ValidationError("Post name can't be '{}'".format(n))
         return n
 
-    def clean(self):
-        cleaned_data = super(PostForm, self).clean() # call the parent clean method
-        title  = cleaned_data.get('title')
-        # if title exists create slug from title
-        if title:
-            cleaned_data['slug'] = slugify(title)
-        return cleaned_data
+    def save(self):
+        instance = super(PostForm, self).save(commit=False)
+        instance.slug = slugify(instance.title)
+        instance.save()
+
+        return instance
