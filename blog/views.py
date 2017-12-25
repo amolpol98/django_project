@@ -1,6 +1,7 @@
-from django.http import HttpResponse, HttpResponseNotFound, Http404
-from django.shortcuts import render, get_object_or_404, get_list_or_404
+from django.http import HttpResponse, HttpResponseNotFound, Http404, HttpResponseRedirect, HttpResponsePermanentRedirect
+from django.shortcuts import render, get_object_or_404, get_list_or_404, redirect
 from .models import Author, Tag, Category, Post
+from django.urls import reverse
 
 def index(request):
     return HttpResponse('hello django')
@@ -39,3 +40,8 @@ def post_by_author(request, name):
         'posts': posts
     }
     return render(request, 'blog/post_by_author.html', context )
+
+def test_redirect(request):
+    print('inside test redirect')
+    c = Category.objects.get(name='Python')
+    return redirect(c)
